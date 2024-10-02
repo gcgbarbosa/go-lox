@@ -1,4 +1,4 @@
-package main
+package lox
 
 import (
 	"bufio"
@@ -59,7 +59,7 @@ func runPrompt() {
 	}
 }
 
-func lox(args []string) int {
+func Lox(args []string) int {
 	// don't run code with errors
 	if hadError {
 		return 65
@@ -77,11 +77,4 @@ func lox(args []string) int {
 
 	fmt.Println(args)
 	return 0
-}
-
-func main() {
-	// Check if a parameter was provided
-	status := lox(os.Args)
-
-	fmt.Print("Exiting with status:", status)
 }
