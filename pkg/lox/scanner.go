@@ -10,11 +10,15 @@ type Scanner struct {
 	line    int
 }
 
-// fun scanToken() {
-//   return
-// }
-
-// Constructor for creating and initializing a scanner
+func NewScanner(source string, tokens []Token) *Scanner {
+	return &Scanner{
+		source:  source,
+		tokens:  tokens,
+		start:   0,
+		current: 0,
+		line:    1,
+	}
+}
 
 func ScanTokens(source string) *Scanner {
 	// scanner := NewScanner(source)
@@ -77,5 +81,5 @@ func ScanTokens(source string) *Scanner {
 
 	// We are at the beginning of the next lexeme.
 	// scanToken()
-	return &Scanner{}
+	return NewScanner(source, tokens)
 }
