@@ -7,6 +7,17 @@ import (
 	"strings"
 )
 
+var hadError bool = false
+
+func report(line int, where string, message string) {
+	fmt.Println("[line " + string(line) + "] Error" + where + ": " + message)
+	hadError = true
+}
+
+func error(line int, message string) {
+	report(line, "", message)
+}
+
 func run(line string) {
 	scanner := bufio.NewScanner(strings.NewReader(line))
 
@@ -49,6 +60,11 @@ func runPrompt() {
 }
 
 func lox(args []string) int {
+	// don't run code with errors
+	if hadError {
+		return 65
+	}
+
 	if len(args) > 2 {
 		fmt.Println("Usage: jlox [script]")
 		return 64
