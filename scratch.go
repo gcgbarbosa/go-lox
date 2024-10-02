@@ -7,6 +7,19 @@ import (
 	"strings"
 )
 
+func run(line string) {
+	scanner := bufio.NewScanner(strings.NewReader(line))
+
+	// Define the scanner to split input by spaces (or other delimiter)
+	scanner.Split(bufio.ScanWords)
+
+	// Scan through each token (word in this case)
+	for scanner.Scan() {
+		token := scanner.Text() // Get the current token
+		fmt.Println("Scanned Token:", token)
+	}
+}
+
 func runFile(path string) {
 	fmt.Println("Running file <" + path + ">")
 }
@@ -30,8 +43,8 @@ func runPrompt() {
 			break
 		}
 
-		fmt.Println("---")
 		fmt.Println("Running: <" + input + ">")
+		run(input)
 	}
 }
 
