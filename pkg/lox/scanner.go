@@ -47,6 +47,7 @@ func ScanTokens(source string) *Scanner {
 		tokens = append(tokens, Token{Type: type_, Lexeme: text, Literal: literal, Line: line})
 	}
 
+	// TODO: add missing tokens
 	scanToken := func() {
 		c := advance()
 
@@ -62,7 +63,6 @@ func ScanTokens(source string) *Scanner {
 		}
 	}
 
-	// TODO: do this until finished
 	for !isAtEnd() { // while !isAtEnd()
 		// if isAtEnd() {
 		// 	break
@@ -75,11 +75,11 @@ func ScanTokens(source string) *Scanner {
 
 	fmt.Println(tokens)
 
-	// scanner.tokens = append(scanner.tokens, Token{
-	// 	Type: EOF, Lexeme: "", Literal: "", Line: line,
-	// })
+	// add EOF to end read
+	tokens = append(tokens, Token{
+		Type: EOF, Lexeme: "", Literal: "", Line: line,
+	})
 
 	// We are at the beginning of the next lexeme.
-	// scanToken()
 	return NewScanner(source, tokens)
 }
