@@ -42,9 +42,14 @@ func ScanTokens(source string) *Scanner {
 		return runes[current-1]
 	}
 
-	addToken := func(type_ TokenType, literal interface{}) {
+	addTokenAndLiteral := func(type_ TokenType, literal interface{}) {
 		text := string(source[start:current])
 		tokens = append(tokens, Token{Type: type_, Lexeme: text, Literal: literal, Line: line})
+	}
+
+	// Helper function that always passes nil for the literal
+	addToken := func(type_ TokenType) {
+		addTokenAndLiteral(type_, nil)
 	}
 
 	// TODO: add missing tokens
@@ -53,9 +58,9 @@ func ScanTokens(source string) *Scanner {
 
 		switch c {
 		case '(':
-			addToken(LEFT_PAREN, nil)
+			addToken(LEFT_PAREN)
 		case ')':
-			addToken(RIGHT_PAREN, nil)
+			addToken(RIGHT_PAREN)
 		// Add more cases for other tokens like operators, literals, etc.
 		default:
 			// Handle unknown characters or skip whitespace here

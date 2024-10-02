@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"gcgbarbosa.com/lox/pkg/lox"
+	"gcgbarbosa.com/lox/lox"
 )
 
 func main() {
