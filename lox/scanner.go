@@ -1,6 +1,6 @@
 package lox
 
-import "fmt"
+// import "fmt"
 
 type Scanner struct {
 	source  string
@@ -37,7 +37,7 @@ func ScanTokens(source string) *Scanner {
 
 		runes := []rune(source)
 
-		fmt.Println("Current:", current)
+		// fmt.Println("Current:", current)
 
 		return runes[current-1]
 	}
@@ -57,14 +57,32 @@ func ScanTokens(source string) *Scanner {
 		c := advance()
 
 		switch c {
+
 		case '(':
 			addToken(LEFT_PAREN)
 		case ')':
 			addToken(RIGHT_PAREN)
+		case '{':
+			addToken(RIGHT_BRACE)
+		case '}':
+			addToken(LEFT_BRACE)
+		case ',':
+			addToken(COMMA)
+		case '.':
+			addToken(DOT)
+		case '-':
+			addToken(MINUS)
+		case '+':
+			addToken(PLUS)
+		case ';':
+			addToken(SEMICOLON)
+		case '*':
+			addToken(STAR)
+
 		// Add more cases for other tokens like operators, literals, etc.
 		default:
 			// Handle unknown characters or skip whitespace here
-			fmt.Println("Unknown character:", c)
+			// fmt.Println("Unknown character:", c)
 		}
 	}
 
@@ -78,7 +96,7 @@ func ScanTokens(source string) *Scanner {
 		start = current
 	}
 
-	fmt.Println(tokens)
+	// fmt.Println(tokens)
 
 	// add EOF to end read
 	tokens = append(tokens, Token{
