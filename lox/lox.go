@@ -1,5 +1,5 @@
 package lox
-
+import "strconv"
 import (
 	"bufio"
 	"fmt"
@@ -10,7 +10,7 @@ import (
 var hadError bool = false
 
 func report(line int, where string, message string) {
-	fmt.Println("[line " + string(line) + "] Error" + where + ": " + message)
+	fmt.Println("[line " + strconv.Itoa(line) + "] Error" + where + ": " + message)
 	hadError = true
 }
 
