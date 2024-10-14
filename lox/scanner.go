@@ -32,6 +32,19 @@ func ScanTokens(source string) *Scanner {
 		return current >= len(source)
 	}
 
+	match := func(expected rune) bool {
+		if isAtEnd() {
+			return false
+		}
+
+		if rune(source[current]) != expected {
+			return false
+		}
+
+    current ++
+    return true
+	}
+
 	advance := func() rune {
 		current += 1
 
@@ -58,6 +71,7 @@ func ScanTokens(source string) *Scanner {
 
 		switch c {
 
+		// tokens
 		case '(':
 			addToken(LEFT_PAREN)
 		case ')':
@@ -79,9 +93,18 @@ func ScanTokens(source string) *Scanner {
 		case '*':
 			addToken(STAR)
 
+		// operators
+		case '!':
+			if match('=') {
+				addToken(BANG_EQUAL)
+			} else {
+				addToken(BANG)
+			}
+
 		// Add more cases for other tokens like operators, literals, etc.
 		default:
 			// Handle unknown characters or skip whitespace here
+			error(line, "Unexpected character.")
 			// fmt.Println("Unknown character:", c)
 		}
 	}
