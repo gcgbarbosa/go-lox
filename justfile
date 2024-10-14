@@ -1,3 +1,6 @@
 build:
-  go run scratch.go
+  go run main.go
+
+test:
+  go test ./...
 
