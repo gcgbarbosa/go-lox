@@ -20,6 +20,10 @@ func NewScanner(source string, tokens []Token) *Scanner {
 	}
 }
 
+func (s *Scanner) Tokens() []Token {
+	return s.tokens
+}
+
 func ScanTokens(source string) *Scanner {
 	// scanner := NewScanner(source)
 	tokens := make([]Token, 0)
@@ -41,8 +45,8 @@ func ScanTokens(source string) *Scanner {
 			return false
 		}
 
-    current ++
-    return true
+		current++
+		return true
 	}
 
 	advance := func() rune {
