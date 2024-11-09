@@ -40,7 +40,7 @@ func ScanTokens(source string) *Scanner {
 		if isAtEnd() {
 			return '\x00'
 		}
-    return rune(source[current])
+		return rune(source[current])
 	}
 
 	// only consume the current character if it is what we are looking for
@@ -105,7 +105,6 @@ func ScanTokens(source string) *Scanner {
 			addToken(STAR)
 
 		// operators
-
 		// handles != or !
 		case '!':
 			if match('=') {
@@ -114,7 +113,7 @@ func ScanTokens(source string) *Scanner {
 				addToken(BANG)
 			}
 
-			// handles == or =
+		// handles == or =
 		case '=':
 			if match('=') {
 				addToken(EQUAL_EQUAL)
@@ -122,7 +121,7 @@ func ScanTokens(source string) *Scanner {
 				addToken(EQUAL)
 			}
 
-			// handles <= or =
+		// handles <= or =
 		case '<':
 			if match('=') {
 				addToken(LESS_EQUAL)
@@ -130,7 +129,7 @@ func ScanTokens(source string) *Scanner {
 				addToken(LESS)
 			}
 
-			// handles >= or >
+		// handles >= or >
 		case '>':
 			if match('=') {
 				addToken(GREATER_EQUAL)
@@ -138,7 +137,7 @@ func ScanTokens(source string) *Scanner {
 				addToken(GREATER)
 			}
 
-			// handles comments
+		// handles comments
 		case '/':
 			if match('/') {
 				for peek() != '\n' && !isAtEnd() {
@@ -147,6 +146,14 @@ func ScanTokens(source string) *Scanner {
 			} else {
 				addToken(SLASH)
 			}
+
+		case ' ':
+    case '\r':
+    case '\t':
+
+    case '\n':
+      line += 1
+
 
 		// Add more cases for other tokens like operators, literals, etc.
 		default:
@@ -166,13 +173,10 @@ func ScanTokens(source string) *Scanner {
 		start = current
 	}
 
-	// fmt.Println(tokens)
-
 	// add EOF to end read
 	tokens = append(tokens, Token{
 		Type: EOF, Lexeme: "", Literal: "", Line: line,
 	})
 
-	// We are at the beginning of the next lexeme.
 	return NewScanner(source, tokens)
 }
