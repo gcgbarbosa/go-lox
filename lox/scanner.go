@@ -36,6 +36,14 @@ func ScanTokens(source string) *Scanner {
 		return current >= len(source)
 	}
 
+	peek := func() rune {
+		if isAtEnd() {
+			return '\x00'
+		}
+    return rune(source[current])
+	}
+
+	// only consume the current character if it is what we are looking for
 	match := func(expected rune) bool {
 		if isAtEnd() {
 			return false
@@ -64,12 +72,11 @@ func ScanTokens(source string) *Scanner {
 		tokens = append(tokens, Token{Type: type_, Lexeme: text, Literal: literal, Line: line})
 	}
 
-	// Helper function that always passes nil for the literal
+	// helper function that always passes nil for the literal
 	addToken := func(type_ TokenType) {
 		addTokenAndLiteral(type_, nil)
 	}
 
-	// TODO: add missing tokens
 	scanToken := func() {
 		c := advance()
 
@@ -98,11 +105,47 @@ func ScanTokens(source string) *Scanner {
 			addToken(STAR)
 
 		// operators
+
+		// handles != or !
 		case '!':
 			if match('=') {
 				addToken(BANG_EQUAL)
 			} else {
 				addToken(BANG)
+			}
+
+			// handles == or =
+		case '=':
+			if match('=') {
+				addToken(EQUAL_EQUAL)
+			} else {
+				addToken(EQUAL)
+			}
+
+			// handles <= or =
+		case '<':
+			if match('=') {
+				addToken(LESS_EQUAL)
+			} else {
+				addToken(LESS)
+			}
+
+			// handles >= or >
+		case '>':
+			if match('=') {
+				addToken(GREATER_EQUAL)
+			} else {
+				addToken(GREATER)
+			}
+
+			// handles comments
+		case '/':
+			if match('/') {
+				for peek() != '\n' && !isAtEnd() {
+					advance()
+				}
+			} else {
+				addToken(SLASH)
 			}
 
 		// Add more cases for other tokens like operators, literals, etc.

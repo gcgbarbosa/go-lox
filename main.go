@@ -17,7 +17,7 @@ func main() {
 	// fmt.Println(lox.ToString(token))
 	// fmt.Println(token)
 
-	scanner := lox.ScanTokens("()")
+	scanner := lox.ScanTokens("()==()<=()")
 	for _, token := range scanner.Tokens() {
     fmt.Printf("Type: \"%s\", Lexeme: \"%s\", Literal: \"%v\", Line: \"%d\"\n",
 			token.Type.String(), token.Lexeme, token.Literal, token.Line)
